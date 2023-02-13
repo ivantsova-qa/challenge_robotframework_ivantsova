@@ -1,7 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library    SeleniumLibrary.Press Keys
-Documentation    Suite description #automated tests for scout website*** Test Cases ***
+Documentation    Suite description #automated tests for scout website
 
 *** Variables ***
 ${LOGIN URL}      https://scouts-test.futbolkolektyw.pl/en
@@ -88,17 +87,16 @@ Type In Surname Field
 Type In Main Position Field
     Input Text    ${FILTERMAINPOSITIONFIELD}        MainRoboTest
 Click On The Players
-    Wait Until Page Contains Element    ${FIRSROW}
+    Wait Until Element Is Visible    ${FIRSROW}
     Table Row Should Contain   ${TABLE}     2   NameRoboTest
     Table Row Should Contain   ${TABLE}     2   SurnameRoboTest
     Table Row Should Contain   ${TABLE}     2   MainRoboTest
-    Wait Until Element Is Visible    ${FIRSROW}
     Click Element   ${FIRSROW}
 Edit Player Info
     Input Text    ${EMAILADDPLAYERFIELD}     testemail@gmail.com
-    Double Click Element       ${NAMEFIELD}
-    Press Keys    ${NAMEFIELD} BACKSPACE
+    Press Keys    ${NAMEFIELD}      BACKSPACE    CTRL+A       BACKSPACE
     Input Text    ${NAMEFIELD}      Test
+    Press Keys    ${SURNAMEFIELD}      BACKSPACE    CTRL+A       BACKSPACE
     Input Text    ${SURNAMEFIELD}       Test
     Input Text    ${PHONEFIELD}     +4878000000
     Input Text    ${WEIGHTFIELD}        75
@@ -107,6 +105,7 @@ Edit Player Info
     Click Element    ${RIGHTLEG}
     Input Text    ${CLUBFIELD}      ClubRobo
     Input Text    ${LEVELFIELD}     LevelRobo
+    Press Keys    ${MAINPOSITIONFIELD}      BACKSPACE    CTRL+A       BACKSPACE
     Input Text    ${MAINPOSITIONFIELD}      Test
     Input Text    ${SECONDPOSITIONFIELD}        SecondRoboTest
     Click Element    ${DISTRICTDROPDOWN}
@@ -119,7 +118,8 @@ Edit Player Info
 Click Submit button
     Click Element    ${SUBMITADDPLAYERBUTTON}
 Assert Success Alert
-    Wait Until Page Contains Element    ${ALERTSUCCESSADDPLAYER}
+    Wait Until Element Is Visible    ${ALERTSUCCESSADDPLAYER}
     Capture Page Screenshot    success_edit_player.png
 Click Close Filter Button
     Click Element    ${FILTERCLOSEBUTTON}
+
